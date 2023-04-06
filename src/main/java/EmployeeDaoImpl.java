@@ -1,5 +1,4 @@
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDAO {
@@ -9,7 +8,6 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> getAllEmployee() {
-        List<Employee> employees = new ArrayList<>();
         try (final Connection connection =
                      DriverManager.getConnection(url, user, password);
              PreparedStatement statement =
