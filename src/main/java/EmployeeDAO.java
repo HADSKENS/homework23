@@ -3,7 +3,7 @@ import java.util.List;
 public interface EmployeeDAO {
     List<Employee> getAllEmployee();
 
-    void getUserId(Long id);
+    Employee getUserId(Long id);
 
     void deleteUserId(Employee employee);
 

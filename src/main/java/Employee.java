@@ -8,11 +8,11 @@ public class Employee {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column (name = "first_name",length = 255,nullable = false)
+    @Column (name = "first_name")
     private String first_name;
-    @Column (name = "last_name",length = 255,nullable = false)
+    @Column (name = "last_name")
     private String last_name;
-    @Column (name = "gender",length = 255,nullable = false)
+    @Column (name = "gender")
     private String gender;
     @Column (name = "age")
     private int age;
@@ -66,5 +66,16 @@ public class Employee {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "id=" + id +
+                ", first_name='" + first_name + '\'' +
+                ", last_name='" + last_name + '\'' +
+                ", gender='" + gender + '\'' +
+                ", age=" + age +
+                '}';
     }
 }

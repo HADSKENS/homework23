@@ -1,5 +1,4 @@
 import javax.persistence.*;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,62 +11,33 @@ public class EmployeeDaoImpl implements EmployeeDAO {
 
     @Override
     public List<Employee> getAllEmployee() {
-        List<Employee> results = new ArrayList<>();
-        entityManager.getTransaction().begin();
-        TypedQuery<Employee> a = entityManager.createQuery("SELECT s FROM Employee s" ,Employee.class);
-        results=a.getResultList();
-        for (Employee employee:results){
-            System.out.println("Student ID: " + employee.getId());
-            System.out.println("Student Name: " + employee.getFirst_name() +" "+ employee.getLast_name());
-            System.out.println("Gender:"+employee.getGender());
-            System.out.println("Student Age: " + employee.getAge());
-            System.out.println("------------");
-        }
-        entityManager.getTransaction().commit();
-        return null;
+        TypedQuery<Employee> a = entityManager.createQuery("from Employee" ,Employee.class);
+        return a.getResultList();
+
     }
 
     @Override
-    public void getUserId(Long idUser) {
-        List<Employee> results = new ArrayList<>();
-        entityManager.getTransaction().begin();
-        TypedQuery<Employee> a = entityManager.createQuery("SELECT s FROM Employee s WHERE s.id=:id1",Employee.class);
-        a.setParameter("id1",idUser);
-        results=a.getResultList();
-        for (Employee employee:results){
-            System.out.println("Student ID: " + employee.getId());
-            System.out.println("Student Name: " + employee.getFirst_name() +" "+ employee.getLast_name());
-            System.out.println("Gender:"+employee.getGender());
-            System.out.println("Student Age: " + employee.getAge());
-            System.out.println("------------");
-        }
-        entityManager.getTransaction().commit();
+    public Employee getUserId(Long idUser) {
+        return entityManager.find(Employee.class,idUser);
     }
 
     @Override
     public void deleteUserId(Employee employee) {
-        entityManager.getTransaction().begin();
-        Query a = entityManager.createQuery("DELETE Employee WHERE id =:idUser");
-        a.setParameter("idUser",employee.getId());
-        entityManager.getTransaction().commit();
+        Employee a = entityManager.find(Employee.class,employee.getId());
+        entityManager.remove(a);
     }
 
     @Override
     public void createUser(Employee employee) {
         entityManager.getTransaction().begin();
-        Query a = entityManager.createQuery("INSERT INTO Employee(first_name,last_name,gender,age) VALUES (:first,:last,:gender,age)");
-        a.setParameter("first",employee.getFirst_name());
-        a.setParameter("last",employee.getLast_name());
-        a.setParameter("gender",employee.getGender());
-        a.setParameter("age",employee.getAge());
+        entityManager.persist(employee);
         entityManager.getTransaction().commit();
     }
 
     @Override
     public void updateUserId(Employee employee) {
         entityManager.getTransaction().begin();
-        Query a = entityManager.createQuery("UPDATE employee SET s.first_name=:name");
-        a.setParameter("name",employee.getFirst_name());
+        entityManager.merge(employee);
         entityManager.getTransaction().commit();
     }
 
