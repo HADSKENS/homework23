@@ -1,24 +1,38 @@
-public class Employee {
-    private int id;
-    private String first_name;
-    private String last_name;
-    private String gender;
-    private int age;
-    private int city;
+import javax.persistence.*;
 
-    public Employee(String first_name, String last_name, String gender, int age, int city) {
+@javax.persistence.Entity
+
+@Table(name = "employee")
+public class Employee {
+    @Id
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column (name = "first_name",length = 255,nullable = false)
+    private String first_name;
+    @Column (name = "last_name",length = 255,nullable = false)
+    private String last_name;
+    @Column (name = "gender",length = 255,nullable = false)
+    private String gender;
+    @Column (name = "age")
+    private int age;
+
+    public Employee(Long id, String first_name, String last_name, String gender, int age) {
+        this.id = id;
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.age = age;
-        this.city=city;
     }
 
-    public int getId() {
+    public Employee() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -52,24 +66,5 @@ public class Employee {
 
     public void setAge(int age) {
         this.age = age;
-    }
-
-    public int getCity() {
-        return city;
-    }
-
-    public void setCity(int city) {
-        this.city = city;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", first_name='" + first_name + '\'' +
-                ", last_name='" + last_name + '\'' +
-                ", gender='" + gender + '\'' +
-                ", age=" + age +
-                '}';
     }
 }
