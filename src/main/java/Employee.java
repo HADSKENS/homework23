@@ -2,7 +2,7 @@ import javax.persistence.*;
 
 @javax.persistence.Entity
 
-@Table(name = "employee")
+@Table(name = "employee1")
 public class Employee {
     @Id
 
@@ -16,13 +16,16 @@ public class Employee {
     private String gender;
     @Column (name = "age")
     private int age;
+    @ManyToOne (cascade = CascadeType.PERSIST,fetch = FetchType.LAZY)
+    @JoinColumn (name = "city_id")
+    private City city_id;
 
-    public Employee(Long id, String first_name, String last_name, String gender, int age) {
-        this.id = id;
+    public Employee(String first_name, String last_name, String gender, int age,City city_id) {
         this.first_name = first_name;
         this.last_name = last_name;
         this.gender = gender;
         this.age = age;
+        this.city_id=city_id;
     }
 
     public Employee() {
@@ -68,6 +71,14 @@ public class Employee {
         this.age = age;
     }
 
+    public City getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(City city_id) {
+        this.city_id = city_id;
+    }
+
     @Override
     public String toString() {
         return "Employee{" +
@@ -76,6 +87,7 @@ public class Employee {
                 ", last_name='" + last_name + '\'' +
                 ", gender='" + gender + '\'' +
                 ", age=" + age +
+                ", city_id=" + city_id +
                 '}';
     }
 }
