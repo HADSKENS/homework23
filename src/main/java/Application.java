@@ -1,24 +1,24 @@
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceException;
+import java.util.concurrent.Callable;
+
 public class Application {
     public static void main(String[] args) {
-        EmployeeDaoImpl a = new EmployeeDaoImpl();
-        Employee update = new Employee();
-        Employee delete = new Employee();
-        Employee create = new Employee();
-        update.setId(1L);
-        update.setFirst_name("2");
-        update.setLast_name("2");
-        update.setGender("муж");
-        update.setAge(23);
-        System.out.println(a.getAllEmployee());
-        a.updateUserId(update);
-        delete.setId(1L);
-        a.deleteUserId(delete);
-        System.out.println(a.getAllEmployee());
-        create.setFirst_name("У");
-        create.setLast_name("У");
-        create.setGender("муж");
-        create.setAge(23);
-        a.createUser(create);
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("myPersistenceUnit");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        CityDAOImpl a = new CityDAOImpl(entityManager);
+        EmployeeDaoImpl d = new EmployeeDaoImpl(entityManager);
+        City b = new City("Dallas");
+        b.setCity_id(4L);
+        System.out.println(a.getAllCity());
+        Employee c = new Employee("2","2","Жен",23,b);
+        c.setId(17L);
+        d.updateUserId(c);
+        System.out.println(d.getAllEmployee());
+        entityManagerFactory.close();
+        entityManager.close();
     }
 }
 
